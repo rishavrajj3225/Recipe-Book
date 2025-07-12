@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: "http://recipe-book-backend-fhh3.onrender.com/",
         changeOrigin: true,
         secure: false,
       },
