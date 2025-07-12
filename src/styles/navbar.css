@@ -1,0 +1,110 @@
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.navbarContainer {
+  max-width: 1280px;
+  margin: auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.navbarLeft {
+  display: flex;
+  align-items: center;
+}
+
+.navbarLogo {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.appTitle {
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.navLinks a {
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navLinks.show {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbarRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userBtn {
+  font-weight: 500;
+}
+
+.hamburgerIcon {
+  display: none;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .navLinks.show {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hamburgerIcon {
+    display: block;
+  }
+}
+.navLinks a {
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navLinks a:hover {
+  color: #ff9800;
+}
+
+.navLinks a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: #ff9800;
+  transition: width 0.3s ease;
+}
+
+.navLinks a:hover::after {
+  width: 100%;
+}

@@ -1,0 +1,43 @@
+.createRecipe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.createRecipe img {
+    width: 600px;
+    order: 1;
+}
+
+.createRecipeForm {
+    display: flex;
+    flex-direction: column;
+    width: 550px;
+    gap: 10px;
+}
+
+@media (max-width: 968px) {
+    .createRecipe img{
+        display: none;
+    }
+}
+.createRecipeContainer {
+    padding-top: 80px; /* adjust if navbar is taller */
+}
+.createRecipeForm button {
+  background-color: #ff9800; /* primary blue */
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+.createRecipeForm button:hover {
+  background-color: #ff9800; /* lighter blue on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}

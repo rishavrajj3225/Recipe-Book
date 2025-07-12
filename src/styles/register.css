@@ -1,0 +1,138 @@
+.loginForm, .registerForm {
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 420px;
+  min-height: 380px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.formContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;     
+  width: 100vw;      
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2; 
+  z-index: 1;
+}
+
+
+.registerFormLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.registerFormLogo img {
+  width: 64px;
+  margin-bottom: 10px;
+}
+
+.registerFormLogo h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+.formInput {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.loginForm .ant-form-item,
+.registerForm .ant-form-item {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loginForm .ant-btn,
+.registerForm .ant-btn {
+  width: 100%;
+  background-color: #ffc107;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  height: 40px;
+}
+
+.loginForm .ant-btn:hover,
+.registerForm .ant-btn:hover {
+  background-color: #ffb300;
+}
+
+.loginForm a,
+.registerForm a {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .loginForm, .registerForm {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .formInput {
+    font-size: 14px;
+  }
+
+  .registerFormLogo h2 {
+    font-size: 20px;
+  }
+}
+
+.registerFormLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.registerFormLogo img {
+  width: 64px;
+  margin-bottom: 8px;
+}
+
+.registerFormLogo h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+.formInput {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.auth-link {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-link a {
+  font-weight: 500;
+  color: #1890ff;
+}
+
+
+
