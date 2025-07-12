@@ -23,7 +23,7 @@ export default function MyRecipes() {
         const fetchRecipes = async () => {
             try {
                 const response = await axios.get(
-                  `/api/v1/recipe/userRecipes/${userId}`
+                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/userRecipes/${userId}`
                 );
                 setRecipes(response.data.data);
             } catch (err) {
@@ -36,7 +36,9 @@ export default function MyRecipes() {
 
     const handleDelete = async (recipeId) => {
         try {
-            await axios.delete(`/api/v1/recipe/delete/${recipeId}`);
+            await axios.delete(
+              `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/delete/${recipeId}`
+            );
 
             setRecipes((prevRecipes) =>
                 prevRecipes.filter((recipe) => recipe._id !== recipeId)
@@ -63,7 +65,7 @@ export default function MyRecipes() {
     const handleUpdate = async () => {
         try {
             await axios.put(
-              `/api/v1/recipe/update/${editedRecipe._id}`,
+              `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/update/${editedRecipe._id}`,
               editedRecipe
             );
 
@@ -71,7 +73,7 @@ export default function MyRecipes() {
             message.success("Recipe updated successfully");
 
             const response = await axios.get(
-              `/api/v1/recipe/userRecipes/${userId}`
+              `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/userRecipes/${userId}`
             );
             setRecipes(response.data.data);
         } catch (error) {
@@ -94,7 +96,7 @@ export default function MyRecipes() {
     const getMoreDetailsOfRecipe = async (recipeId) => {
         try {
             const response = await axios.get(
-              `/api/v1/recipe/${recipeId}`
+              `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/${recipeId}`
             );
             setSelectedRecipeDetails(response.data.data);
             setDetailsModalVisible(true);
