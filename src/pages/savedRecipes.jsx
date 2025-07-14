@@ -19,7 +19,7 @@ export default function SavedRecipes() {
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/savedRecipes/${userId}`
+          `/api/v1/recipe/savedRecipes/${userId}`
         );
         setSavedRecipes(response.data.data);
       } catch (err) {
@@ -36,7 +36,7 @@ export default function SavedRecipes() {
       for (let userId of userIds) {
         if (!usernamesMap[userId]) {
           try {
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/${userId}`);
+            const res = await axios.get(`/api/v1/users/${userId}`);
             const username = res.data.data.username;
             setUsernamesMap((prev) => ({
               ...prev,
@@ -60,7 +60,7 @@ export default function SavedRecipes() {
 
   const getMoreDetailsOfRecipe = async (savedRecipeId) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/${savedRecipeId}`);
+      const response = await axios.get(`/api/v1/recipe/${savedRecipeId}`);
       setSelectedRecipeDetails(response.data.data);
       setDetailsModalVisible(true);
     } catch (error) {
@@ -72,7 +72,7 @@ export default function SavedRecipes() {
   const removeSavedRecipe = async (recipeID) => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/removeSaved/${recipeID}/${userId}`,
+        `/api/v1/recipe/removeSaved/${recipeID}/${userId}`,
         {
           recipeID,
           userID: currentUser._id,

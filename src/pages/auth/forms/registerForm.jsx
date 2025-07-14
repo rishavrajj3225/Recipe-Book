@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,24 +10,26 @@ const RegisterForm = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("currentUser");
+  }, []);
 
-  const onFinish = async (values) => {
-    try {
-      setLoading(true);
-      await axios.post(
-        ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/users/register`,
-        values
-      );
-      message.success("Registration successful");
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      message.error("Registration failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+const onFinish = async (values) => {
+  try {
+    setLoading(true);
+    const response = await axios.post(`/api/v1/users/register`, values);
+    const registeredUser = response?.data?.data;
+    localStorage.setItem("currentUser", JSON.stringify(registeredUser));
+    message.success("Registration successful");
+    navigate("/", { state: { user: registeredUser } });
+  } catch (err) {
+    console.error(err);
+    message.error("Registration failed.");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <div className="formContainer">
       <Form
