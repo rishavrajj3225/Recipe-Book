@@ -61,7 +61,7 @@ const CreateRecipe = () => {
       }
 
       const resp = await axios.post(
-        ` /api/v1/recipe/create`,
+        ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/create`,
         { ...recipe },
         {
           headers: { authorization: cookies.access_token },

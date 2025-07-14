@@ -18,7 +18,7 @@ const RegisterForm = () => {
 const onFinish = async (values) => {
   try {
     setLoading(true);
-    const response = await axios.post(`/api/v1/users/register`, values);
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/register`, values);
     const registeredUser = response?.data?.data;
     localStorage.setItem("currentUser", JSON.stringify(registeredUser));
     message.success("Registration successful");

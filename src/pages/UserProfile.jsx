@@ -13,7 +13,7 @@ function UserProfile() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`/api/v1/users/${userId}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/${userId}`);
         setUserDetails(response.data.data);
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -29,7 +29,7 @@ function UserProfile() {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          `/api/v1/recipe/userRecipes/${userId}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/userRecipes/${userId}`
         );
         setRecipes(response.data.data);
       } catch (err) {

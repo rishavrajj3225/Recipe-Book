@@ -24,7 +24,7 @@ const LoginForm = () => {
   const onFinish = async (values) => {
     try {
       dispatch(logInStart());
-      const response = await axios.post(` /api/v1/users/login`, values);
+      const response = await axios.post(` ${import.meta.env.VITE_BACKEND_URL}/api/v1/users/login`, values);
 
       dispatch(logInSuccess(response));
       message.success("Login successful");

@@ -23,7 +23,7 @@ export default function Home() {
         const fetchRecipes = async () => {
             try {
                 const response = await axios.get(
-                  `/api/v1/recipe`
+                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe`
                 );
                 setRecipes(response.data.data);
             } catch (err) {
@@ -34,7 +34,7 @@ export default function Home() {
         const fetchSavedRecipes = async () => {
             try {
                 const response = await axios.get(
-                   `/api/v1/recipe/savedRecipes/ids/${userID}`
+                   `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/savedRecipes/ids/${userID}`
                 );
                 setSavedRecipes(response.data.data.savedRecipes);
             } catch (err) {
@@ -49,7 +49,7 @@ export default function Home() {
       if (usernamesMap[userId]) return; // Already fetched
 
       try {
-        const response = await axios.get(`/api/v1/users/${userId}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/${userId}`);
         const username = response.data.data.username;
         setUsernamesMap((prev) => ({
           ...prev,
@@ -79,7 +79,7 @@ export default function Home() {
     const saveRecipe = async (recipeID) => {
         try {
             const response = await axios.put(
-               `/api/v1/recipe/save`,
+               `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/save`,
               {
                 recipeID,
                 userID,
@@ -106,7 +106,7 @@ export default function Home() {
     const getMoreDetailsOfRecipe = async (recipeId) => {
         try {
             const response = await axios.get(
-               `/api/v1/recipe/${recipeId}`
+               `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/${recipeId}`
             );
             setSelectedRecipeDetails(response.data.data);
             setDetailsModalVisible(true);
