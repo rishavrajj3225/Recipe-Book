@@ -15,7 +15,7 @@ const RegisterForm = () => {
     try {
       setLoading(true);
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/register`,
+        ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/users/register`,
         values
       );
       message.success("Registration successful");

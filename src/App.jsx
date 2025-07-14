@@ -9,6 +9,7 @@ import loginForm from "./pages/auth/forms/loginForm";
 import PrivateRoute from "./components/PrivateRoute";
 import myRecipes from "./pages/myRecipes";
 import Error404 from "./components/Error404.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/create-recipe" Component={createRecipe}></Route>
             <Route path="/saved-recipes" Component={savedRecipes}></Route>
             <Route path="/my-recipes" Component={myRecipes}></Route>
+            <Route path="/user-profile" Component={UserProfile}></Route>
           </Route>
 
           {/* Error 404 */}

@@ -8,7 +8,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-import logo from "../../public/assets/logo.png";
+import logo from "/assets/logo.png"; // ✅ Correct usage with Vite
 import "../styles/navbar.css";
 
 import { useSelector } from "react-redux";
@@ -29,9 +29,13 @@ const Navbar = () => {
   };
 
   const content = (
-    <div>
-      <p>Email: {userEmail}</p>
-      <Button danger onClick={logout} style={{ width: "100%" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+
+      <Button type="primary" onClick={() => navigate("/user-profile")} block>
+        See Profile
+      </Button>
+
+      <Button danger onClick={logout} block>
         Logout
       </Button>
     </div>

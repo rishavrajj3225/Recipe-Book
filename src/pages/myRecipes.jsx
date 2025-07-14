@@ -8,6 +8,7 @@ import RecipeDetailsModal from "../components/RecipeDetailsModal.jsx";
 
 const { TextArea } = Input;
 import RecipeEditModal from "../components/RecipeEditModal.jsx";
+import { use } from "react";
 
 export default function MyRecipes() {
     const [recipes, setRecipes] = useState([]);
@@ -18,12 +19,11 @@ export default function MyRecipes() {
 
     const { currentUser } = useSelector((state) => state.user);
     const userId = currentUser.data.data.user._id;
-
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
                 const response = await axios.get(
-                  `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/userRecipes/${userId}`
+                  ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/userRecipes/${userId}`
                 );
                 setRecipes(response.data.data);
             } catch (err) {
@@ -65,7 +65,7 @@ export default function MyRecipes() {
     const handleUpdate = async () => {
         try {
             await axios.put(
-              `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/update/${editedRecipe._id}`,
+              ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/update/${editedRecipe._id}`,
               editedRecipe
             );
 
@@ -73,7 +73,7 @@ export default function MyRecipes() {
             message.success("Recipe updated successfully");
 
             const response = await axios.get(
-              `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/userRecipes/${userId}`
+              ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/userRecipes/${userId}`
             );
             setRecipes(response.data.data);
         } catch (error) {
@@ -96,7 +96,7 @@ export default function MyRecipes() {
     const getMoreDetailsOfRecipe = async (recipeId) => {
         try {
             const response = await axios.get(
-              `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/${recipeId}`
+              ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/${recipeId}`
             );
             setSelectedRecipeDetails(response.data.data);
             setDetailsModalVisible(true);
