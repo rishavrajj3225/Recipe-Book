@@ -5,7 +5,6 @@ import axios from 'axios';
 const RecipeDetailsModal = ({ visible, onCancel, recipeDetails }) => {
   const userId = recipeDetails?.userOwner;
   const [owner, setOwner] = useState(null);
-
   const finduser = async (userId) => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/${userId}`);

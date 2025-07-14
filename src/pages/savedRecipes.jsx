@@ -1,129 +1,128 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { List, Button, Card, message } from 'antd';
-import {DeleteOutlined, DownOutlined} from '@ant-design/icons';
-import Navbar from '../components/Navbar.jsx';
-
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { List, message } from "antd";
+import Navbar from "../components/Navbar.jsx";
+import { useSelector } from "react-redux";
 import RecipeDetailsModal from "../components/RecipeDetailsModal.jsx";
+import RecipeCard from "../components/RecipeCard.jsx";
 
 export default function SavedRecipes() {
-    const { currentUser } = useSelector((state) => state.user);
-    const userId = currentUser.data.data.user._id;
+  const { currentUser } = useSelector((state) => state.user);
+  const userId = currentUser.data.data.user._id;
 
-    const [savedRecipes, setSavedRecipes] = useState([]);
-    const [detailsModalVisible, setDetailsModalVisible] = useState(false);
-    const [selectedRecipeDetails, setSelectedRecipeDetails] = useState({});
+  const [savedRecipes, setSavedRecipes] = useState([]);
+  const [detailsModalVisible, setDetailsModalVisible] = useState(false);
+  const [selectedRecipeDetails, setSelectedRecipeDetails] = useState({});
+  const [usernamesMap, setUsernamesMap] = useState({});
 
-    useEffect(() => {
-        const fetchSavedRecipes = async () => {
-            try {
-                const response = await axios.get(
-                  ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/savedRecipes/${userId}`
-                );
-                setSavedRecipes(response.data.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
+  useEffect(() => {
+    const fetchSavedRecipes = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/savedRecipes/${userId}`
+        );
+        setSavedRecipes(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-        fetchSavedRecipes();
-    }, [userId]);
+    fetchSavedRecipes();
+  }, [userId]);
 
-    const getMoreDetailsOfRecipe = async (savedRecipeId) => {
-        try {
-            const response = await axios.get(
-              ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/${savedRecipeId}`
-            );
-            setSelectedRecipeDetails(response.data.data);
-            setDetailsModalVisible(true);
-        } catch (error) {
-            console.error(error);
-            message.error("Failed to fetch recipe details");
+  useEffect(() => {
+    const fetchAllUsernames = async () => {
+      const userIds = new Set(savedRecipes.map((r) => r.userOwner));
+      for (let userId of userIds) {
+        if (!usernamesMap[userId]) {
+          try {
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/${userId}`);
+            const username = res.data.data.username;
+            setUsernamesMap((prev) => ({
+              ...prev,
+              [userId]: username,
+            }));
+          } catch (err) {
+            console.error("Failed to fetch user:", userId);
+            setUsernamesMap((prev) => ({
+              ...prev,
+              [userId]: "Unknown User",
+            }));
+          }
         }
+      }
     };
 
-    const removeSavedRecipe = async (recipeID) => {
-        try {
-            const response = await axios.put(
-              ` ${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/removeSaved/${recipeID}/${userId}`,
-              {
-                recipeID,
-                userID: currentUser._id,
-              }
-            );
-            setSavedRecipes(response.data.data.savedRecipes);
-            message.success('Recipe removed from saved!');
-        } catch (err) {
-            console.error(err);
-            message.error('Failed to remove recipe from saved');
+    if (savedRecipes.length > 0) {
+      fetchAllUsernames();
+    }
+  }, [savedRecipes]);
+
+  const getMoreDetailsOfRecipe = async (savedRecipeId) => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/${savedRecipeId}`);
+      setSelectedRecipeDetails(response.data.data);
+      setDetailsModalVisible(true);
+    } catch (error) {
+      console.error(error);
+      message.error("Failed to fetch recipe details");
+    }
+  };
+
+  const removeSavedRecipe = async (recipeID) => {
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/recipe/removeSaved/${recipeID}/${userId}`,
+        {
+          recipeID,
+          userID: currentUser._id,
         }
-    };
+      );
+      setSavedRecipes(response.data.data.savedRecipes);
+      message.success("Recipe removed from saved!");
+    } catch (err) {
+      console.error(err);
+      message.error("Failed to remove recipe from saved");
+    }
+  };
 
-    const truncateDescription = (description) => {
-        const words = description.split(' ');
-        if (words.length > 10) {
-            return words.slice(0, 10).join(' ') + '...';
-        }
-        return description;
-    };
+  const closeModal = () => {
+    setDetailsModalVisible(false);
+    setSelectedRecipeDetails({});
+  };
 
-    const closeModal = () => {
-        setDetailsModalVisible(false);
-        setSelectedRecipeDetails({});
-    };
-
-    return (
-        <>
-            <Navbar />
-            <div className="savedRecipesContainer container">
-                <p className="sectionHeading">Saved Recipes</p>
-                <List
-                    grid={{
-                        gutter: 16,
-                        xs: 1,
-                        sm: 2,
-                        md: 3,
-                        lg: 3,
-                        xl: 4,
-                    }}
-                    dataSource={savedRecipes}
-                    renderItem={(savedRecipe) => (
-                        <List.Item>
-                            <Card
-                                className="recipeCard"
-                                title={savedRecipe.name}
-                                cover={<img alt={savedRecipe.name} src={savedRecipe.recipeImg} />}
-                                actions={[
-                                    <Button
-                                        type="primary"
-                                        icon={<DeleteOutlined />}
-                                        onClick={() => removeSavedRecipe(savedRecipe._id)}
-                                    >
-                                        Remove
-                                    </Button>,
-                                    <Button
-                                        type="primary"
-                                        icon={<DownOutlined />}
-                                        onClick={() => getMoreDetailsOfRecipe(savedRecipe._id)}
-                                    >
-                                        Read More
-                                    </Button>,
-                                ]}
-                            >
-                                <p>
-                                    {truncateDescription(savedRecipe.description)}
-                                </p>
-                            </Card>
-                        </List.Item>
-                    )}
-                />
-                <RecipeDetailsModal
-                    visible={detailsModalVisible}
-                    onCancel={closeModal}
-                    recipeDetails={selectedRecipeDetails}
-                />
-            </div>
-        </>
-    );
+  return (
+    <>
+      <Navbar />
+      <div className="savedRecipesContainer container">
+        <p className="sectionHeading">Saved Recipes</p>
+        <List
+          grid={{
+            gutter: 16,
+            xs: 1,
+            sm: 2,
+            md: 3,
+            lg: 3,
+            xl: 4,
+          }}
+          dataSource={savedRecipes}
+          renderItem={(recipe) => (
+            <List.Item>
+              <RecipeCard
+                recipe={recipe}
+                onDelete={removeSavedRecipe}
+                onReadMore={getMoreDetailsOfRecipe}
+                creatorName={usernamesMap[recipe.userOwner]}
+              />
+            </List.Item>
+          )}
+        />
+        <RecipeDetailsModal
+          visible={detailsModalVisible}
+          onCancel={closeModal}
+          recipeDetails={selectedRecipeDetails}
+        />
+      </div>
+    </>
+  );
 }
